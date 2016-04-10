@@ -80,7 +80,9 @@ class AppState(object):
             devTools.device = None
 
 
-    def _sendToWeb(self, method, params={}):
+    def _sendToWeb(self, method, params=None):
+        if params is None:
+            params = {}
         for lobby in self.lobbies:
             lobby.write_method(method, params)
 
@@ -198,7 +200,9 @@ class LobbyHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, msg):
         pass
 
-    def write_method(self, method, params={}):
+    def write_method(self, method, params=None):
+        if params is None:
+            params = {}
         payload = json.dumps(dict(id=self.message_id, method=method, params=params))
         self.write_message(payload)
         self.message_id += 1
