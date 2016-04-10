@@ -145,7 +145,7 @@ class DeviceHandler(tornado.websocket.WebSocketHandler):
         self.app_state.registerDevice(self)
 
         # Announce existence.
-        logger.info("Device %s Registered (%s, %s)" % (self.deviceID,
+        logger.info("Device {0!s} Registered ({1!s}, {2!s})".format(self.deviceID,
                                                        self.device_model,
                                                        self.device_name))
 
@@ -240,7 +240,7 @@ class Gateway(PonydCommand):
 
     def __call__(self):
         if not os.path.exists(self.devtools_path):
-            print "Error: devtools directory %s does not exist. Use 'ponyd update-devtools' to download a compatible version of Chrome Developer Tools." % self.devtools_path
+            print "Error: devtools directory {0!s} does not exist. Use 'ponyd update-devtools' to download a compatible version of Chrome Developer Tools.".format(self.devtools_path)
             return
 
         if self.verbose:
@@ -257,7 +257,7 @@ class Gateway(PonydCommand):
             (r"/(.*)", tornado.web.StaticFileHandler, {"path": self.static_path, "default_filename": 'index.html'}),
         ])
 
-        print "PonyGateway starting. Listening on http://%s:%s" % (self.listen_interface, self.listen_port)
+        print "PonyGateway starting. Listening on http://{0!s}:{1!s}".format(self.listen_interface, self.listen_port)
 
         bonjour.register_service(self.bonjour_name, "_ponyd._tcp", self.listen_port)
 

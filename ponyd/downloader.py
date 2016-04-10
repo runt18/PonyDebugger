@@ -18,7 +18,7 @@ class Downloader(PonydCommand):
     __subcommand__  = 'update-devtools'
 
     dirname = Arg(nargs='?',
-                  help='path to download and extract devtools (default: %s)' % DEFAULT_DEVTOOLS_PATH,
+                  help='path to download and extract devtools (default: {0!s})'.format(DEFAULT_DEVTOOLS_PATH),
                   default=DEFAULT_DEVTOOLS_PATH)
     latest = Arg('-l', '--latest',
                  help='install the lastest dev tools instead of a known good version',
@@ -31,17 +31,17 @@ class Downloader(PonydCommand):
             version = 152100
 
         tools_url = TOOLS_URL_TEMPLATE % version 
-        print "Downloading %s" % tools_url
+        print "Downloading {0!s}".format(tools_url)
 
         tools_stream = StringIO(urllib2.urlopen(tools_url).read())
 
 
         if os.path.exists(self.dirname):
-            print "Removing existing devtools installation at %s" % self.dirname
+            print "Removing existing devtools installation at {0!s}".format(self.dirname)
             shutil.rmtree(self.dirname)
 
         extract_dir = self.dirname
-        print "Extracting to %s" % extract_dir
+        print "Extracting to {0!s}".format(extract_dir)
 
         tools_zip = zipfile.ZipFile(tools_stream, 'r')
         tools_zip.extractall(path=extract_dir)
